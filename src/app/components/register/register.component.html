@@ -1,0 +1,26 @@
+<div class="register-container">
+  <h1>Sign Up</h1>
+
+  <form #registerForm="ngForm" (ngSubmit)="submitRegisterForm(registerForm)">
+    <div class="form-field">
+      <label for="email-address">Email address</label>
+      <input
+        type="text"
+        id="email-address"
+        placeholder="email@example.com"
+        ngModel
+        name="emailAddress"
+      />
+    </div>
+
+    <div class="form-field">
+      <label for="password">Password</label>
+      <input type="password" id="password" ngModel name=" password" />
+    </div>
+
+    <div class="action-buttons">
+      <button type="submit">Register</button>
+      <button routerLink="/">Back</button>
+    </div>
+  </form>
+</div>

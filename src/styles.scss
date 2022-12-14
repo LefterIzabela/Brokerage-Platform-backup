@@ -1,1 +1,42 @@
-/* You can add global styles to this file, and also import other style files */
+* {
+  box-sizing: border-box;
+  --light-green: #7ed56f;
+  --medium-green: #55c57a;
+  --dark-green: #28b485;
+  --pale-green: #91d9a9;
+  --pale-blue-green: #ceeed9;
+  font-family: "Times New Roman", Times, serif;
+  font-size: medium;
+}
+
+html {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  margin: 0px;
+  padding: 15px 80px;
+  background-image: linear-gradient(
+      to right bottom,
+      rgba(128, 214, 113, 0.804),
+      rgba(40, 180, 133, 0.804)
+  );
+
+  background-size: cover;
+  background-position: top;
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}

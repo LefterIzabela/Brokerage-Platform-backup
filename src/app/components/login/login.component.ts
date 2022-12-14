@@ -17,6 +17,9 @@ export class LoginComponent implements OnInit {
   client: UserClass = new UserClass(
     'client',
     'pass');
+  client2: UserClass = new UserClass(
+    'client2',
+    'pass');
 
   constructor(private formbuilder: FormBuilder, private _router: Router) {}
 

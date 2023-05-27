@@ -1,26 +1,35 @@
 <div class="login-container">
   <h1>Login</h1>
 
-  <form #loginForm="ngForm" (ngSubmit)="submitLoginForm(loginForm)">
+  <form (ngSubmit)="Login()">
     <div class="form-field">
-      <label for="email-address">Email address</label>
+      <label for="email">Email address</label>
       <input
         type="text"
-        id="email-address"
+        id="email"
         placeholder="email@example.com"
-        ngModel
-        name="emailAddress"
+        [(ngModel)]="user.email"
+        name="email"
       />
     </div>
 
     <div class="form-field">
       <label for="password">Password</label>
-      <input type="password" id="password" ngModel name=" password" />
+      <input type="password"
+             id="password"
+             placeholder="password"
+             [(ngModel)]="user.password"
+             name=" password"
+      />
+    </div>
+
+    <div *ngIf="buttonClicked && !correctCredentials && errorMessage !== ''" class="alert">
+      Wrong username or password
     </div>
 
     <div class="action-buttons">
       <button type="submit">Login</button>
-      <button routerLink="/register">Sign Up</button>
+      <button [routerLink]="'/register'">Sign Up</button>
     </div>
   </form>
 </div>

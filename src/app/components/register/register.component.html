@@ -1,26 +1,82 @@
 <div class="register-container">
   <h1>Sign Up</h1>
 
-  <form #registerForm="ngForm" (ngSubmit)="submitRegisterForm(registerForm)">
+  <form [formGroup]="signUpFormGroup" (ngSubmit)="Submit()">
     <div class="form-field">
-      <label for="email-address">Email address</label>
+      <label for="email">Email address</label>
       <input
         type="text"
-        id="email-address"
+        id="email"
         placeholder="email@example.com"
-        ngModel
-        name="emailAddress"
+        formControlName="email"
+        name="email"
       />
+      <div *ngIf="signUpFormGroup.controls['email'].invalid && (signUpFormGroup.controls['email'].touched || signUpFormGroup.controls['email'].dirty)" class="alert">
+        <div *ngIf="signUpFormGroup.controls['email'].errors?.['required']" class="alert">
+          Please enter email
+        </div>
+        <div *ngIf="signUpFormGroup.controls['email'].errors?.['pattern']" class="alert">
+          Email must respect the standard email pattern
+        </div>
+      </div>
+    </div>
+
+    <div class="form-field">
+      <label for="username">Username</label>
+      <input type="text"
+             id="username"
+             placeholder="username"
+             formControlName="username"
+             name="username"
+      />
+      <div *ngIf="signUpFormGroup.controls['username'].invalid && (signUpFormGroup.controls['username'].touched || signUpFormGroup.controls['username'].dirty)" class="alert">
+        <div *ngIf="signUpFormGroup.controls['username'].errors?.['required']" class="alert">
+          Please enter username
+        </div>
+        <div *ngIf="signUpFormGroup.controls['username'].errors?.['pattern']" class="alert">
+          Username must start with a letter
+        </div>
+      </div>
     </div>
 
     <div class="form-field">
       <label for="password">Password</label>
-      <input type="password" id="password" ngModel name=" password" />
+      <input type="password"
+             id="password"
+             placeholder="password"
+             formControlName="password"
+             name="password"
+      />
+      <div *ngIf="signUpFormGroup.controls['password'].invalid && (signUpFormGroup.controls['password'].touched || signUpFormGroup.controls['password'].dirty)" class="alert">
+        <div *ngIf="signUpFormGroup.controls['password'].errors?.['required']" class="alert">
+          Please enter password
+        </div>
+        <div *ngIf="signUpFormGroup.controls['password'].errors?.['pattern']" class="alert">
+          Password must not be null, be at least 8 characters long,
+          contain at least one uppercase character,
+          one lowercase character, one digit and one special character.
+        </div>
+      </div>
+    </div>
+
+    <div class="form-field">
+      <label for="passwordConfirm">Confirm Password</label>
+      <input type="password"
+             id="passwordConfirm"
+             placeholder="password"
+             formControlName="passwordConfirm"
+             name="passwordConfirm"
+      />
+      <div *ngIf="signUpFormGroup.controls['passwordConfirm'].invalid && (signUpFormGroup.controls['passwordConfirm'].touched || signUpFormGroup.controls['passwordConfirm'].dirty)" class="alert">
+        <div *ngIf="signUpFormGroup.controls['passwordConfirm'].errors?.['matching']" class="alert">
+          Confirmation password must match password
+        </div>
+      </div>
     </div>
 
     <div class="action-buttons">
-      <button type="submit">Register</button>
-      <button routerLink="/">Back</button>
+      <button type="submit" [disabled]="!signUpFormGroup.valid">Submit</button>
+      <button [routerLink]="'/'">Back</button>
     </div>
   </form>
 </div>

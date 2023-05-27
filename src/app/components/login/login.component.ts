@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {UserClass} from "../../models/user.model";
-import {FormBuilder, NgForm} from "@angular/forms";
+import {User} from "../../models/user.model";
 import {Router} from "@angular/router";
+import {Subscription} from "rxjs";
+import {UserService} from "../../services/user.service";
 
 @Component({
   selector: 'app-login',
@@ -9,40 +10,37 @@ import {Router} from "@angular/router";
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+  user: User = new User();
+  subscriptionList: Subscription[] = [];
+  correctCredentials: boolean = false;
+  buttonClicked: boolean = false;
+  errorMessage: string = '';
 
-  users: UserClass[] = [];
-  admin: UserClass = new UserClass(
-    'admin',
-    'pass');
-  client: UserClass = new UserClass(
-    'client',
-    'pass');
-  client2: UserClass = new UserClass(
-    'client2',
-    'pass');
+  constructor(private router: Router, private userService: UserService) {}
 
-  constructor(private formbuilder: FormBuilder, private _router: Router) {}
+  ngOnInit(): void {}
 
-  ngOnInit():void { }
+  Login() {
+    console.log(this.user);
+    this.buttonClicked = true;
+    this.subscriptionList.push(this.userService.login(this.user).subscribe(data=>{
+        this.correctCredentials = true;
+        console.log(data);
+        setTimeout(() => {
+          if (data.role == "user")
+            this.router.navigate(['/home']);
+          else if (data.role == "admin")
+            this.router.navigate(['/users']);
+        }, 0);
+      },
+      error => {
+        this.errorMessage = 'Login failed. Please check your credentials and try again.';
+        console.error(error);
+      }
+    ));
+  }
 
-  submitLoginForm(form: NgForm) {
-    this.users.push(this.admin);
-    this.users.push(this.client);
-    const formValues = form.value;
-    const userFromForm: UserClass = new UserClass(
-      formValues.emailAddress,
-      formValues.password
-    );
-    // this.users.push(userFromForm);
-
-    if(this.users.find(userInList => userInList.emailAddress == userFromForm.emailAddress)) {
-      this._router.navigate(['/home']);
-    }
-    else
-    {
-      console.log('Incorrect credentials! Try again or register')
-      form.reset();
-    }
-    console.log('This is the list of users: ', this.users);
+  ngOnDestroy(): void {
+    this.subscriptionList.forEach(subscription => subscription.unsubscribe());
   }
 }

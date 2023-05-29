@@ -15,11 +15,7 @@ export class UserService {
   constructor(private httpClient: HttpClient) {
   }
 
-  login(user: User): Observable<object> {
-    return this.httpClient.post<User>(this.baseUrl, user);
-  }
-
-  signUp(user: User): Observable<object> {
+  signUp(user: User): Observable<User> {
     return this.httpClient.post<User>(this.baseUrl + '/register', user);
   }
 }

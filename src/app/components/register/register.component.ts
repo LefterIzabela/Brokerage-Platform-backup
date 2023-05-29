@@ -32,7 +32,7 @@ export class RegisterComponent implements OnInit {
     this.signUpFormGroup = this.formBuilder.group({
       username: ['', Validators.compose([
         Validators.required,
-        Validators.pattern('^[A-Za-z][A-Za-z0-9_]*$'),
+        Validators.pattern('^([A-Za-z][A-Za-z0-9_]* ?)*[A-Za-z][A-Za-z0-9_]*$'),
       ])],
       email: ['', Validators.compose([
         Validators.required,
